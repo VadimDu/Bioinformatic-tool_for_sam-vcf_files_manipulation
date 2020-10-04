@@ -1,5 +1,5 @@
 # Bioinformatic-tool_for_sam-vsf_files_manipulation
-Bioinformatic tool for filtering and manipulating sam/bam alignment, bcf/vcf variant calling and fastq files.
+Bioinformatic tool for filtering and manipulating sam/bam alignment, vcf/bcf variant calling and fastq files.
 
 ## Python modules requirements
 You need to have Python version >=3.0 and the following modules installed:
@@ -7,6 +7,8 @@ You need to have Python version >=3.0 and the following modules installed:
 <br/>pysam
 
 ## Usage instructions
+Run the provided `bioinformatic_formats_tool.py` script with Python3 on one of the following bioinformatic formatted files: sam or bam (sequence alignment file or its binary ver, produced with short reads aligners such as Bowtie2 or BWA), vcf or bcf (variant calling file or its binary ver, produced with variant/SNP callers such as SAMtools or BCFtools), or illumina raw fastq files.<br/>
+Using this script, you can filter your sam/bam files according to different criteria such as read base Phred quality, mapping quality, %-alignment identity, read length or by specific reference. You can obtain mapping statistics, sort and index your bam file or extract only reads flagged as "mapped" (similar functionality to SAMtools program). You can also filter vcf/bcf variants files. Finally, another useful things you can do is to convert your bam file back to fastq file, convert 2 paired-end fastq files (forward/reverse) to a single interleaved fastq file, and convert fastq to fasta format (without Phred base scores).
 
 ## Full command-line options (--help)
 ```
@@ -49,3 +51,24 @@ optional arguments:
 ```
 
 ## Examples
+* Apply a filter to your bam file, keeping reads that have: mapping quality (MAPQ) scores >=20, base quality Phred score >=30, percent identity between the reads and reference >=95%, and have a minimum read length of 100 bp:
+```
+python3 bioinformatic_formats_tool.py my_alignment_file_sorted.bam --bam-filter -mq 20 -rq 30 -p 95 -l 100 --output ./Output_dir
+Selected parameters for bam filter:
+reference: .*, mapping quality: 20, read quality: 30, read length: 100, %-identity: 95.0
+Finished
+File <my_alignment_file_sorted.bam_filtered.bam> was created
+```
+* Convert 2 paired-end fastq files to a single interleaved fastq file:
+```
+python3 bioinformatic_formats_tool.py ERS2665906_trimmed_R1.fastq ERS2665906_trimmed_R2.fastq --fastq-concat --output ./Output_dir
+Finished
+File <output_interleaved_R1_R2.fastq> was created
+```
+* Covert a bam alignment file to a single interleaved (forward-reverse) fastq file:
+```
+python3 bioinformatic_formats_tool.py my_alignment_file_sorted.bam --bamtofastq -o ./Output_dir
+Finished
+File <my_alignment_file_sorted.bam.fastq> was created
+```
+
