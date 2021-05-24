@@ -1,4 +1,4 @@
-# Bioinformatic-tool_for_sam-vsf_files_manipulation
+# Bioinformatic-tool_for_sam-vsf_manipulation
 Bioinformatic tool for filtering and manipulating sam/bam alignment, vcf/bcf variant calling and fastq files.
 
 ## Python modules requirements
